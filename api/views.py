@@ -30,11 +30,6 @@ def find_photos(category, num):
     return paths
 
 
-# class PhotoViewSet(viewsets.ModelViewSet):
-#     queryset = PhotoModel.objects.all()
-#     serializer_class = PhotoSerializer
-
-
 @api_view(['GET', 'POST'])
 def take_photo(request):
     """
