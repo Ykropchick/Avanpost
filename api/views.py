@@ -96,3 +96,5 @@ def take_category(request):
     return HttpResponse("ok")
 
 
+
+
