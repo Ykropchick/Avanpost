@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ql9s#9$*%h3gwi^vso26+3qc$ux+tb=+c+5nf3824jffr4x*$4
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['www.avanpost.com', "avanpost.com"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -79,11 +79,8 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'u1859482_default',
-        'USER': 'u1859482_default',
-        'PASSWORD': 'rT0sK3mK0m',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
