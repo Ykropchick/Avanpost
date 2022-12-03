@@ -33,8 +33,14 @@ def find_photos(category, num):
     return paths
 
 
+@api_view(['POST'])
+def start_neuron(request):
+    if request.method == "POST":
+        print(request.data)
+        img_urls = []
+
 @api_view(['GET', 'POST'])
-def take_photo(request):
+def save_photo(request):
     """
     List all code snippets, or create a new snippet.
     """
@@ -56,8 +62,6 @@ def take_photo(request):
             serializer.save()
 
     return HttpResponse("Not ok")
-
-
 
 
 @api_view(['GET', 'POST'])

@@ -11,7 +11,7 @@ def upload_category_to(instance, filename):
 
 class CategoryModel(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="name")
-    image_url = models.ImageField(upload_to=upload_category_to, null=True, verbose_name="image_url")
+    imageUrl = models.ImageField(upload_to=upload_category_to, null=True, verbose_name="image_url")
 
     def __str__(self):
         return self.name

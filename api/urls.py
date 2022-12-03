@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 
-from .views import take_category, take_photo
+from .views import take_category, save_photo, start_neuron
 
 router = SimpleRouter()
 
@@ -13,5 +13,6 @@ router = SimpleRouter()
 
 urlpatterns = [
     path('categories/', take_category),
-    path('photo/', take_photo)
+    path('save_photo/', save_photo),
+    path('start_neuron/', start_neuron),
 ]
