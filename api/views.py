@@ -36,7 +36,7 @@ def find_photos(category, num):
 @api_view(['POST'])
 def start_neuron(request):
     if request.method == "POST":
-        image_path = os.chdir("../../mediafiles/images/tests")
+        image_path = "../../mediafiles/images/tests"
         img_urls = request.data['data'].split(',')
         img_urls = [img_url.strip() for img_url in img_urls]
 
@@ -74,25 +74,21 @@ def take_category(request):
         snippets = CategoryModel.objects.all()
         serializer = CategorySerializer(snippets, many=True)
         for object in serializer.data:
-            object['imageUrl'] = host_url + object['imageUrl']
+            if object['imageUrl']:
+                object['imageUrl'] = host_url + object['imageUrl']
         results = {"categories": serializer.data}
         return Response(results)
 
     elif request.method == 'POST':
         serializer = CategorySerializer(data=request.data)
-        print(request.data)
-        print(serializer.is_valid())
         if serializer.is_valid():
-            serializer.save()
-
-            category = serializer.data['name']
+            category = serializer.validated_data.get('name')
 
             paths = find_photos(category, 5)
-            serializer.data['imageUrl'] = paths[0]
-            print(paths[0])
+            path = paths[0].replace('mediafiles', "")
+            print(path)
 
-            print(serializer.data)
-            serializer.validated_data.get("imageUrl")
+            serializer.save(imageUrl=path)
             # Сюда вставалять нейронку category - это категория в формате строк Пример: 'bus',
             # paths - это путь до картинок, Пример: mediafiles/images/{category}/0000001
     return HttpResponse("ok")
