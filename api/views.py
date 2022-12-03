@@ -36,32 +36,30 @@ def find_photos(category, num):
 @api_view(['POST'])
 def start_neuron(request):
     if request.method == "POST":
-        print(request.data)
-        img_urls = []
+        photo_path = "/home/kirill/outsource_project/AvanpostHak/mediafiles/images/tests"
+        img_urls = request.data['data'].split(',')
+
+        # Сюда вставлять нейронку, которая будет проверятся на тестовых фотках
+        # photo_path - директория где находятся все фотки
+        try:
+            shutil.rmtree(photo_path)
+        except:
+            pass
+    return HttpResponse("Ответ нейронки")
 
 @api_view(['GET', 'POST'])
 def save_photo(request):
     """
     List all code snippets, or create a new snippet.
     """
-    if request.method == "GET":
-        photo_path = "/home/kirill/outsource_project/AvanpostHak/mediafiles/images/tests"
-        # Сюда вставлять нейронку, которая будет проверятся на тестовых фотках
-        # photo_path - директория где находятся все фотки
-
-        try:
-            shutil.rmtree(photo_path)
-        except:
-            pass
-        return HttpResponse("Ответ от нейронки")
-
 
     if request.method == 'POST':
         serializer = PhotoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+        return HttpResponse("OK")
 
-    return HttpResponse("Not ok")
+    return HttpResponse("Need POST")
 
 
 @api_view(['GET', 'POST'])
@@ -73,15 +71,15 @@ def take_category(request):
         snippets = CategoryModel.objects.all()
         serializer = CategorySerializer(snippets, many=True)
         for object in serializer.data:
-            object['image_url'] = host_url + object['image_url']
-        results = {"categories" : serializer.data}
+            object['imageUrl'] = host_url + object['imageUrl']
+        results = {"categories": serializer.data}
         return Response(results)
 
     elif request.method == 'POST':
         serializer = CategorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            category = serializer.data['category']
+            category = serializer.data['name']
 
             paths = find_photos(category, 5)
             # Сюда вставалять нейронку category - это категория в формате строк Пример: 'bus',
