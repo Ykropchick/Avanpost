@@ -12,6 +12,6 @@ router = SimpleRouter()
 
 
 urlpatterns = [
-    path('test/', take_category),
+    path('categories/', take_category),
     path('photo/', take_photo)
 ]

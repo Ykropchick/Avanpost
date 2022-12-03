@@ -6,7 +6,7 @@ from .models import CategoryModel, PhotoModel
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
-        fields = ['category']
+        fields = ['name', 'image_url']
 
 
 class PhotoSerializer(serializers.ModelSerializer):

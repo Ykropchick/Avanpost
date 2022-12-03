@@ -17,6 +17,9 @@ from .serializers import CategorySerializer, PhotoSerializer
 from icrawler.builtin import GoogleImageCrawler
 
 
+host_url = "https://web-production-0241.up.railway.app"
+
+
 def find_photos(category, num):
     paths = []
     crawl = GoogleImageCrawler(storage={'root_dir': f'/home/kirill/outsource_project/AvanpostHak/mediafiles/images/{category}'})
@@ -65,13 +68,17 @@ def take_category(request):
     if request.method == 'GET':
         snippets = CategoryModel.objects.all()
         serializer = CategorySerializer(snippets, many=True)
-        return Response(serializer.data)
+        for object in serializer.data:
+            object['image_url'] = host_url + object['image_url']
+        results = {"categories" : serializer.data}
+        return Response(results)
 
     elif request.method == 'POST':
         serializer = CategorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             category = serializer.data['category']
+
             paths = find_photos(category, 5)
             # Сюда вставалять нейронку category - это категория в формате строк Пример: 'bus',
             # paths - это путь до картинок, Пример: mediafiles/images/{category}/0000001
