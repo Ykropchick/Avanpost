@@ -4,6 +4,7 @@ from .models import CategoryModel, PhotoModel
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    imageUrl = serializers.ImageField(required=False, allow_null=True)
     class Meta:
         model = CategoryModel
         fields = ['name', 'imageUrl']
@@ -12,4 +13,4 @@ class CategorySerializer(serializers.ModelSerializer):
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = PhotoModel
-        fields = ['photo']
+        fields = ['imageUrl']

@@ -17,6 +17,6 @@ class CategoryModel(models.Model):
         return self.name
 
 class PhotoModel(models.Model):
-    photo = models.ImageField(upload_to=upload_to, blank=True, null=True)
-    category = models.ManyToManyField(CategoryModel)
+    imageUrl = models.ImageField(upload_to=upload_to, blank=True, null=True)
+    name = models.ManyToManyField(CategoryModel)
 

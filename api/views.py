@@ -36,13 +36,14 @@ def find_photos(category, num):
 @api_view(['POST'])
 def start_neuron(request):
     if request.method == "POST":
-        photo_path = "/home/kirill/outsource_project/AvanpostHak/mediafiles/images/tests"
+        image_path = os.chdir("../../mediafiles/images/tests")
         img_urls = request.data['data'].split(',')
+        img_urls = [img_url.strip() for img_url in img_urls]
 
         # Сюда вставлять нейронку, которая будет проверятся на тестовых фотках
-        # photo_path - директория где находятся все фотки
+        # image_path - директория где находятся все фотки
         try:
-            shutil.rmtree(photo_path)
+            shutil.rmtree(image_path)
         except:
             pass
     return HttpResponse("Ответ нейронки")
@@ -57,9 +58,11 @@ def save_photo(request):
         serializer = PhotoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-        return HttpResponse("OK")
+            imageUrl = host_url + serializer.data['imageUrl']
+            response = {'imageUrl': imageUrl}
+            return Response(response)
 
-    return HttpResponse("Need POST")
+    return HttpResponse("Error")
 
 
 @api_view(['GET', 'POST'])
@@ -77,11 +80,19 @@ def take_category(request):
 
     elif request.method == 'POST':
         serializer = CategorySerializer(data=request.data)
+        print(request.data)
+        print(serializer.is_valid())
         if serializer.is_valid():
             serializer.save()
+
             category = serializer.data['name']
 
             paths = find_photos(category, 5)
+            serializer.data['imageUrl'] = paths[0]
+            print(paths[0])
+
+            print(serializer.data)
+            serializer.validated_data.get("imageUrl")
             # Сюда вставалять нейронку category - это категория в формате строк Пример: 'bus',
             # paths - это путь до картинок, Пример: mediafiles/images/{category}/0000001
     return HttpResponse("ok")
