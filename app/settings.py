@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-ql9s#9$*%h3gwi^vso26+3qc$ux+tb=+c+5nf3824jffr4x*$4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = ['www.avanpost.com', "avanpost.com"]
 
 # Application definition
 
