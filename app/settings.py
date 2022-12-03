@@ -132,6 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
 
+RF_TRUSTED_ORIGINS = ['*']
 
 MEDIA_URL = "https://web-production-0241.up.railway.app" + '/media/'
 
