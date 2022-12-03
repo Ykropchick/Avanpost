@@ -48,6 +48,7 @@ def start_neuron(request):
             pass
     return HttpResponse("Ответ нейронки")
 
+
 @api_view(['GET', 'POST'])
 def save_photo(request):
     """
@@ -58,7 +59,7 @@ def save_photo(request):
         serializer = PhotoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            imageUrl = host_url + serializer.data['imageUrl']
+            imageUrl = serializer.data['imageUrl']
             response = {'imageUrl': imageUrl}
             return Response(response)
 
@@ -86,10 +87,12 @@ def take_category(request):
 
             paths = find_photos(category, 5)
             path = paths[0].replace('mediafiles', "")
-            print(path)
 
             serializer.save(imageUrl=path)
+            return Response(serializer.data)
             # Сюда вставалять нейронку category - это категория в формате строк Пример: 'bus',
             # paths - это путь до картинок, Пример: mediafiles/images/{category}/0000001
+
     return HttpResponse("ok")
+
 

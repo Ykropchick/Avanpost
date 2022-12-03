@@ -9,6 +9,7 @@ icrawler==0.6.6
 idna==3.4
 lxml==4.9.1
 Pillow==9.3.0
+psycopg2-binary==2.9.5
 pytz==2022.6
 requests==2.28.1
 six==1.16.0
