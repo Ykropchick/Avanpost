@@ -17,16 +17,16 @@ from .models import CategoryModel, PhotoModel
 from .serializers import CategorySerializer, PhotoSerializer
 from icrawler.builtin import GoogleImageCrawler
 
-# import torch
-# import clip
+import torch
+import clip
 from PIL import Image
 
 host_url = "https://web-production-0241.up.railway.app"
 
-# device = "cuda" if torch.cuda.is_available() else "cpu"
-# model, preprocess = clip.load("RN50", device=device)
-# THRESHOLD = 0.5
-# categories = ['snowboard','skateboard','truck','car','train','horse','lawnmower','ski','snowmobile','dump truck', 'van']
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model, preprocess = clip.load("RN50", device=device)
+THRESHOLD = 0.5
+categories = ['snowboard','skateboard','truck','car','train','horse','lawnmower','ski','snowmobile','dump truck', 'van']
 
 def predict_image_from_path(path):
     image = preprocess(Image.open(path)).unsqueeze(0).to(device)
@@ -66,14 +66,10 @@ def start_neuron(request):
         for filename in os.listdir(image_path):
             if ".jpg" in filename.lower():
                 labels = predict_image_from_path(os.path.join(image_path, filename))
-                answer_dict['http://127.0.0.1:8000/media/images/tests' + filename] = labels
-        print(answer_dict)
+                answer_dict[host_url + '/media/images/tests/' + filename] = labels
 
-        #"trunc.img" : ['trunc']
-        try:
-            shutil.rmtree(image_path)
-        except:
-            pass
+        return Response(answer_dict)
+
     return HttpResponse("Ответ нейронки")
 
 
@@ -119,7 +115,7 @@ def take_category(request):
             path = paths[0].replace("mediafiles", "")
             serializer.save(imageUrl=path)
             return Response({"name": serializer.data['name'],
-                             'imageUrl': "http://127.0.0.1:8000" + serializer.data['imageUrl']})
+                             'imageUrl': host_url + serializer.data['imageUrl']})
 
     return HttpResponse("ok")
 
