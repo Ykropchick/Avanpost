@@ -75,7 +75,7 @@ def start_neuron(request):
                 answer_dict[key] = 'None'
         df = pd.DataFrame(answer_dict, )
         df.to_csv("answer.csv")
-        # return Response(answer_dict)
+        return Response(answer_dict)
 
     return HttpResponse("Ответ нейронки")
 
