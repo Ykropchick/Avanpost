@@ -59,7 +59,7 @@ def save_photo(request):
         serializer = PhotoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            imageUrl = serializer.data['imageUrl']
+            imageUrl = host_url + serializer.data['imageUrl']
             response = {'imageUrl': imageUrl}
             return Response(response)
 
@@ -89,7 +89,8 @@ def take_category(request):
             path = paths[0].replace('mediafiles', "")
 
             serializer.save(imageUrl=path)
-            return Response(serializer.data)
+            return Response({"name": serializer.data['name'],
+                             'imageUrl': host_url + serializer.data['imageUrl']})
             # Сюда вставалять нейронку category - это категория в формате строк Пример: 'bus',
             # paths - это путь до картинок, Пример: mediafiles/images/{category}/0000001
 
