@@ -1,7 +1,7 @@
 # Avanpost
 ---
 ## Running
-###### Сначало загрузить зависимости ```pip install -r requirments.txt```, потом запустить сервер ```python manage.py runserver```
+###### Сначало загрузить зависимости ```pip install -r requirements.txt```, потом запустить сервер ```python manage.py runserver```
 ---
 ## Structure
 ###### start_neuron при помощи POST запроса запускает нейроную сеть, берет картинки из папки mediafiles/images/test
