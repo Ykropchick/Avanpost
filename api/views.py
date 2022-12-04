@@ -8,6 +8,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.parsers import FormParser, MultiPartParser
 
+import pandas as pd
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -17,16 +18,16 @@ from .models import CategoryModel, PhotoModel
 from .serializers import CategorySerializer, PhotoSerializer
 from icrawler.builtin import GoogleImageCrawler
 
-# import torch
-# import clip
+import torch
+import clip
 from PIL import Image
 
-host_url = "https://web-production-0241.up.railway.app"
+host_url = "http://127.0.0.1:8000/"
 
-# device = "cuda" if torch.cuda.is_available() else "cpu"
-# model, preprocess = clip.load("RN50", device=device)
-# THRESHOLD = 0.5
-# categories = ['snowboard','skateboard','truck','car','train','horse','lawnmower','ski','snowmobile','dump truck', 'van']
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model, preprocess = clip.load("RN50", device=device)
+THRESHOLD = 0.5
+categories = ['snowboard','skateboard','truck','car','train','horse','lawnmower','ski','snowmobile','dump truck', 'van']
 
 def predict_image_from_path(path):
     image = preprocess(Image.open(path)).unsqueeze(0).to(device)
@@ -67,8 +68,14 @@ def start_neuron(request):
             if ".jpg" in filename.lower():
                 labels = predict_image_from_path(os.path.join(image_path, filename))
                 answer_dict[host_url + '/media/images/tests/' + filename] = labels
-
-        return Response(answer_dict)
+        # print(answer_dict.values())
+        # print(answer_dict.keys())
+        for key in answer_dict:
+            if not(answer_dict[key]):
+                answer_dict[key] = 'None'
+        df = pd.DataFrame(answer_dict, )
+        df.to_csv("answer.csv")
+        # return Response(answer_dict)
 
     return HttpResponse("Ответ нейронки")
 
