@@ -17,16 +17,16 @@ from .models import CategoryModel, PhotoModel
 from .serializers import CategorySerializer, PhotoSerializer
 from icrawler.builtin import GoogleImageCrawler
 
-import torch
-import clip
+# import torch
+# import clip
 from PIL import Image
 
 host_url = "https://web-production-0241.up.railway.app"
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-model, preprocess = clip.load("RN50", device=device)
-THRESHOLD = 0.5
-categories = ['snowboard','skateboard','truck','car','train','horse','lawnmower','ski','snowmobile','dump truck', 'van']
+# device = "cuda" if torch.cuda.is_available() else "cpu"
+# model, preprocess = clip.load("RN50", device=device)
+# THRESHOLD = 0.5
+# categories = ['snowboard','skateboard','truck','car','train','horse','lawnmower','ski','snowmobile','dump truck', 'van']
 
 def predict_image_from_path(path):
     image = preprocess(Image.open(path)).unsqueeze(0).to(device)

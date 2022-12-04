@@ -77,16 +77,45 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# settings.py
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'qqZSLaiApQwYQl7CTpOd',
-        'HOST': 'containers-us-west-150.railway.app',
-        'PORT': '6440',
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'database': 'u1859482_default ',
+            'user': 'u1859482_default ',
+            'password': 'Z2IQM5Wd96H6Lfup ',
+            'default-character-set': 'utf8',
+        },
     }
 }
+
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'u1859482_default ',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Z2IQM5Wd96H6Lfup ',
+#         'HOST': ' localhost',
+#         'PORT': '6440',
+#     }
+# }
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'qqZSLaiApQwYQl7CTpOd',
+#         'HOST': 'containers-us-west-150.railway.app',
+#         'PORT': '6440',
+#     }
+# }
 
 
 # Password validation
